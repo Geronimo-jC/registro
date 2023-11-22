@@ -1,15 +1,37 @@
-const registros = []
+const listaPrincipal = []
 
-function agregarDatos(event){
-    event.preventDefault()
-    let nombre = document.getElementById("nombre")
-    let ul = document.getElementById("registros")
+function objetoPc(nombre,error){
+    const registro = {
+        nombre,
+        error,
+        check:`<input type="checkbox">error</input>`
+    }
+    return registro
+}
 
-    registros.push(nombre.value)
-    ul.innerHTML +=`<li>${nombre.value}</li>` 
-    nombre.value = ""
-    registros.map((elemento, indice)=>{
-        console.log(elemento, indice)
+function mostrarTabla(){
+    let tbody = document.getElementById("tabla")
+    tbody.innerHTML = ""
+    listaPrincipal.map((e,i)=>{
+        tbody.innerHTML += `
+        <tr>
+        <th>${i}</th>
+        <td>${e.nombre}</td>
+        <td>${e.error}</td>
+        <td>${e.check}</td>
+        </tr>
+        `
     })
+}
+
+function registro (event){
+    event.preventDefault()
+    let nombre = document.getElementById('nombre')
+    let error = document.getElementById("error")
+    let registro = objetoPc(nombre.value,error.value)
+    listaPrincipal.push(registro)
+    nombre.value = ""
+    error.value = ""
+    mostrarTabla()
 }
 
